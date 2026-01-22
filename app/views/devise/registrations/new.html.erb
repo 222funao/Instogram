@@ -3,6 +3,29 @@
     <h1 class="auth-logo">Instogram</h1>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <div class="profile-setup">
+
+  <h2 class="profile-title">Crea tu perfil</h2>
+
+  <div class="avatar-upload">
+    <label for="user_avatar" class="avatar-label">
+      <div class="avatar-preview">
+        <span>+</span>
+      </div>
+      <p>Foto de perfil</p>
+    </label>
+
+    <%= f.file_field :avatar, id: "user_avatar", class: "avatar-input" %>
+  </div>
+
+  <div class="field username-field">
+    <%= f.text_field :username,
+      placeholder: "Nombre de usuario",
+      class: "username-input",
+      required: true %>
+  </div>
+
+</div>
 
       <%= f.email_field :email, placeholder: "Correo electrónico", class: "auth-input" %>
       <%= f.password_field :password, placeholder: "Contraseña", class: "auth-input" %>

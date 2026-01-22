@@ -2,7 +2,15 @@
   <% @posts.each do |post| %>
     <div class="post-card">
       <div class="post-header">
-        <strong><%= post.user.email %></strong>
+        <div class="post-user">
+  <% if post.user.avatar.attached? %>
+    <%= image_tag post.user.avatar,
+      class: "avatar" %>
+  <% end %>
+
+  <strong>@<%= post.user.username %></strong>
+</div>
+
       </div>
 
       <% if post.image.attached? %>
@@ -31,7 +39,16 @@
 
 
       <div class="post-body">
-        <p><strong><%= post.user.email %></strong> <%= post.caption %></p>
+        <div class="post-user">
+  <% if post.user.avatar.attached? %>
+    <%= image_tag post.user.avatar,
+      class: "avatar" %>
+  <% end %>
+
+  <strong>@<%= post.user.username %></strong> <%= post.caption %></p>
+</div>
+
+ 
       </div>
 
 <div class="comments">
@@ -39,7 +56,7 @@
     <div class="comment">
       <p class="comment-text">
         <span class="comment-user">
-          <%= comment.user.email %>
+          <%= comment.user.username %>
         </span>
         <%= comment.content %>
       </p>
