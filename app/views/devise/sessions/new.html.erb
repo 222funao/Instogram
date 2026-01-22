@@ -1,0 +1,27 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1 class="auth-logo">Instogram</h1>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+      <div class="field">
+        <%= f.email_field :email, autofocus: true, placeholder: "Correo electrónico", class: "auth-input" %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password, placeholder: "Contraseña", class: "auth-input" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Iniciar sesión", class: "auth-btn" %>
+      </div>
+
+    <% end %>
+
+    <div class="auth-footer">
+      ¿No tienes cuenta?
+      <%= link_to "Regístrate", new_user_registration_path %>
+    </div>
+  </div>
+</div>
+

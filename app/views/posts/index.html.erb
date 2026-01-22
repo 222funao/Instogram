@@ -1,0 +1,73 @@
+<div class="feed">
+  <% @posts.each do |post| %>
+    <div class="post-card">
+      <div class="post-header">
+        <strong><%= post.user.email %></strong>
+      </div>
+
+      <% if post.image.attached? %>
+        <%= image_tag post.image, class: "post-image" %>
+      <% end %>
+
+<div class="like-section">
+  <% if post.liked_by?(current_user) %>
+    <%= button_to post_like_path(post, post.likes.find_by(user: current_user)),
+      method: :delete,
+      class: "like-btn liked" do %>
+      ❤️
+    <% end %>
+  <% else %>
+    <%= button_to post_likes_path(post),
+      method: :post,
+      class: "like-btn" do %>
+      🤍
+    <% end %>
+  <% end %>
+
+  <span class="like-count">
+    <%= post.likes.count %> likes
+  </span>
+</div>
+
+
+      <div class="post-body">
+        <p><strong><%= post.user.email %></strong> <%= post.caption %></p>
+      </div>
+
+<div class="comments">
+  <% post.comments.each do |comment| %>
+    <div class="comment">
+      <p class="comment-text">
+        <span class="comment-user">
+          <%= comment.user.email %>
+        </span>
+        <%= comment.content %>
+      </p>
+
+      <% if comment.user == current_user %>
+        <%= button_to "✖",
+          post_comment_path(post, comment),
+          method: :delete,
+          class: "comment-delete",
+          form: { class: "inline" } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="comment-form">
+  <%= form_with model: [post, Comment.new], local: true do |f| %>
+    <%= f.text_field :content,
+      placeholder: "Añade un comentario...",
+      class: "comment-input" %>
+
+    <%= f.submit "Publicar",
+      class: "comment-submit" %>
+  <% end %>
+</div>
+
+
+
+    </div>
+  <% end %>
+</div>

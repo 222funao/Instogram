@@ -1,0 +1,10 @@
+<div class="form-card">
+  <h2>Crear publicación</h2>
+
+  <%= form_with model: @post do |f| %>
+    <%= f.file_field :image, class: "input" %>
+    <%= f.text_field :caption, placeholder: "Escribe un caption...", class: "input" %>
+    <%= f.submit "Publicar", class: "btn-primary" %>
+  <% end %>
+</div>
+

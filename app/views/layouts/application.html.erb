@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instogram</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <span class="logo">Instogram</span>
+
+        <div class="nav-links">
+          <%= link_to "Nuevo", new_post_path, class: "nav-btn" %>
+          <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "nav-btn logout" %>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <%= yield %>
+    </main>
+  </body>
+</html>
+
