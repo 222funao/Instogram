@@ -1,10 +1,25 @@
-<div class="form-card">
-  <h2>Crear publicación</h2>
+<%= form_with model: @post, local: true, html: { multipart: true }, class: "new-post-form" do |f| %>
 
-  <%= form_with model: @post do |f| %>
-    <%= f.file_field :image, class: "input" %>
-    <%= f.text_field :caption, placeholder: "Escribe un caption...", class: "input" %>
-    <%= f.submit "Publicar", class: "btn-primary" %>
-  <% end %>
-</div>
+  <div class="post-image-upload">
+    <%= f.label :media, class: "image-label" do %>
+      <span>📷 Seleccionar contenido</span>
+    <% end %>
+
+    <%= f.file_field :media,
+          multiple: true,
+          accept: "image/*,video/*",
+          class: "image-input" %>
+  </div>
+
+  <div class="post-caption">
+    <%= f.text_area :caption,
+      placeholder: "Escribe una descripción...",
+      rows: 3 %>
+  </div>
+
+  <%= f.submit "Publicar", class: "post-submit" %>
+
+<% end %>
+
+
 

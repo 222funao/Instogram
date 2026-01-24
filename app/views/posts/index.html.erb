@@ -14,9 +14,65 @@
 
       </div>
       
-      <% if post.image.attached? %>
-        <%= image_tag post.image, class: "post-image" %>
+<% if post.media.attached? %>
+  <div class="carousel" data-carousel>
+
+    <% if post.media.count > 1 %>
+      <button class="carousel-btn prev" type="button">‹</button>
+    <% end %>
+
+    <div class="carousel-track">
+      <% post.media.each do |file| %>
+        <div class="carousel-item">
+
+          <div class="post-media-frame">
+            <% if file.image? %>
+              <%= image_tag file, class: "post-media" %>
+
+         <% elsif file.video? %>
+  <div class="video-wrapper post-media">
+    <video
+      class="post-media post-video"
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      data-video
+    >
+      <source src="<%= url_for(file) %>" type="<%= file.content_type %>">
+    </video>
+
+    <button class="mute-btn" type="button">🔇</button>
+  </div>
+<% end %>
+          </div>
+
+        </div>
       <% end %>
+    </div>
+
+    <% if post.media.count > 1 %>
+      <button class="carousel-btn next" type="button">›</button>
+    <% end %>
+
+    <% if post.media.count > 1 %>
+      <div class="carousel-dots">
+        <% post.media.each_with_index do |_, index| %>
+          <span
+            class="dot <%= 'active' if index == 0 %>"
+            data-index="<%= index %>">
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+<% end %>
+
+
+
+
+
 
 <div class="like-section">
   <% if post.liked_by?(current_user) %>
@@ -52,36 +108,37 @@
  
       </div>
 
-<div class="comments">
-  <% post.comments.each do |comment| %>
-    <div class="comment">
-      <p class="comment-text">
-        <span class="comment-user">
-          <%= comment.user.username %>
-        </span>
-        <%= comment.content %>
-      </p>
-
-      <% if comment.user == current_user %>
+<div class="comments-section">
+  <button class="toggle-comments-btn">
+    Ver comentarios
+  </button>
+  <div class="comments-box hidden">
+    <div class="comments">
+      <% post.comments.each do |comment| %>
+        <div class="comment">
+          <span class="comment-user"><%= comment.user.username %></span>
+          <span class="comment-text"><%= comment.content %></span>
+          <% if comment.user == current_user %>
         <%= button_to "✖",
           post_comment_path(post, comment),
           method: :delete,
           class: "comment-delete",
           form: { class: "inline" } %>
       <% end %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
-
-<div class="comment-form">
+    <div class="comment-form">
   <%= form_with model: [post, Comment.new], local: true do |f| %>
     <%= f.text_field :content,
       placeholder: "Añade un comentario...",
-      class: "comment-input" %>
-
+      class: "comment-input" %>   
     <%= f.submit "Publicar",
       class: "comment-submit" %>
   <% end %>
+</div>
+  </div>
+
 </div>
 
 
