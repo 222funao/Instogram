@@ -2,26 +2,26 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    post = Post.find(params[:post_id])
-    comment = post.comments.build(comment_params)
-    comment.user = current_user
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.create(
+      user: current_user,
+      content: params[:comment][:content]
+    )
 
-    if comment.save
-      redirect_to posts_path
-    else
-      redirect_to posts_path, alert: "No se pudo guardar el comentario"
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to posts_path }
     end
   end
 
   def destroy
-    comment = current_user.comments.find(params[:id])
-    comment.destroy
-    redirect_to posts_path
-  end
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
+    @comment.destroy
 
-  private
-
-  def comment_params
-    params.require(:comment).permit(:content)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to posts_path }
+    end
   end
 end

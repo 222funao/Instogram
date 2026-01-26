@@ -1,12 +1,27 @@
 <main>
 <div class="feed">
+  <% if @posts.empty? %>
+  <% if params[:query].present? %>
+    <div class="no-results">
+      No hay resultados para "<strong><%= params[:query] %></strong>"
+    </div>
+  <% else %>
+    <div class="no-results">
+      Aún no hay publicaciones
+    </div>
+  <% end %>
+<% end %>
+
   <% @posts.each do |post| %>
     <div class="post-card">
       <div class="post-header">
         <div class="post-user">
-  <% if post.user.avatar.attached? %>
-    <%= image_tag post.user.avatar,
-      class: "avatar" %>
+    <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, class: "avatar" %>
+        <% else %>
+          <%= image_tag "default_avatar.png", class:"avatar" %>
+
+        
   <% end %>
 
   <strong>@<%= post.user.username %></strong>
@@ -75,68 +90,52 @@
 
 
 <div class="like-section">
-  <% if post.liked_by?(current_user) %>
-    <%= button_to post_like_path(post, post.likes.find_by(user: current_user)),
-      method: :delete,
-      class: "like-btn liked" do %>
-      ❤️
-    <% end %>
-  <% else %>
-    <%= button_to post_likes_path(post),
-      method: :post,
-      class: "like-btn" do %>
-      🤍
-    <% end %>
-  <% end %>
-
-  <span class="like-count">
-    <%= post.likes.count %> likes
-  </span>
+<div id="post_<%= post.id %>_like">
+  <%= render "likes/button", post: post %>
 </div>
 
 
-      <div class="post-body">
-        <div class="post-user">
-  <% if post.user.avatar.attached? %>
-    <%= image_tag post.user.avatar,
-      class: "avatar" %>
-  <% end %>
 
-  <strong>@<%= post.user.username %></strong> <%= post.caption %></p>
-</div>
+
+
+
 
  
+</div>
+
+<% if post.caption.present? %>
+  <div class="post-body">
+    <div class="post-user-caption">
+      
+      <div class="avatar-container">
+        <% if post.user.avatar.attached? %>
+          <%= image_tag post.user.avatar, class: "avatar" %>
+        <% else %>
+          <%= image_tag "default_avatar.png", class: "avatar" %>
+        <% end %>
       </div>
+
+      <div class="post-caption-content">
+        <strong class="username-text">@<%= post.user.username %></strong><span class="caption-text"><%= post.caption %></span>
+      </div>
+
+    </div>
+  </div>
+<% end %>
 
 <div class="comments-section">
   <button class="toggle-comments-btn">
     Ver comentarios
   </button>
   <div class="comments-box hidden">
-    <div class="comments">
-      <% post.comments.each do |comment| %>
-        <div class="comment">
-          <span class="comment-user"><%= comment.user.username %></span>
-          <span class="comment-text"><%= comment.content %></span>
-          <% if comment.user == current_user %>
-        <%= button_to "✖",
-          post_comment_path(post, comment),
-          method: :delete,
-          class: "comment-delete",
-          form: { class: "inline" } %>
-      <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="comment-form">
-  <%= form_with model: [post, Comment.new], local: true do |f| %>
-    <%= f.text_field :content,
-      placeholder: "Añade un comentario...",
-      class: "comment-input" %>   
-    <%= f.submit "Publicar",
-      class: "comment-submit" %>
-  <% end %>
+    <div id="comments_<%= post.id %>" class="comments">
+  <%= render post.comments %>
 </div>
+
+   <div class="comment-form">
+  <%= render "comments/form", post: post %>
+</div>
+
   </div>
 
 </div>
@@ -145,5 +144,40 @@
 
     </div>
   <% end %>
+
+
+</div>
+
+<button id="toggle-sidebar" class="messages-btn">
+  💬 Mensajes
+</button>
+
+
 </div>
 </main>
+
+<script>
+ // Definimos la función fuera para que sea una referencia estable
+// 1. Forzar Modo Oscuro Siempre (Incluso antes de que cargue el body)
+
+
+// 2. Función de Toggle
+const globalSidebarToggle = (e) => {
+    const btn = e.target.closest("#toggle-sidebar");
+    if (btn) {
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) {
+            sidebar.classList.toggle("active");
+        }
+    }
+};
+
+// 3. Vincular al objeto WINDOW (Máxima jerarquía)
+// Esto sobrevive a cambios de HTML, Turbo y navegación hacia atrás
+if (!window.sidebarInitialized) {
+    window.addEventListener("click", globalSidebarToggle);
+    window.sidebarInitialized = true;
+}
+
+
+</script>

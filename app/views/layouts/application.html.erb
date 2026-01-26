@@ -16,13 +16,21 @@
   <div class="nav-left">
     <%= link_to "Instogram", root_path, class: "logo" %>
   </div>
+   <div class="navbar-search">
+  <%= form_with url: posts_path, method: :get, local: true do |f| %>
+    <%= f.text_field :query,
+      placeholder: "🔍 Buscar",
+      class: "search-input",
+      value: params[:query] %>
+  <% end %>
+</div>
 
   <div class="nav-right">
     
 
       <%= link_to "Nuevo", new_post_path, class: "nav-link" %>
 
-     <button id="theme-toggle" class="theme-btn">🌙</button>
+    
 
 
       <%= button_to "Salir",
@@ -35,7 +43,8 @@
         <% if current_user.avatar.attached? %>
           <%= image_tag current_user.avatar, class: "nav-avatar" %>
         <% else %>
-          <div class="nav-avatar placeholder"></div>
+          <%= image_tag "default_avatar.png", class:"nav-avatar placeholder" %>
+
         <% end %>
 
         <span class="nav-username">
@@ -47,10 +56,17 @@
   </div>
 </nav>
 
+<div class="layout">
+  <% if user_signed_in? %>
+    <%= render "shared/sidebar" %>
+  <% end %>
 
-    <main class="container">
-      <%= yield %>
-    </main>
+  <main class="container feed">
+    <%= yield %>
+  </main>
+</div>
+
+
   </body>
 </html>
 

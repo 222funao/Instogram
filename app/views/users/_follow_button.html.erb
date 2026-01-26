@@ -1,0 +1,25 @@
+
+<% if current_user.friends_with?(user) %>
+  <span class="friend-status">Amigos</span>
+
+<% elsif current_user.following?(user) %>
+  <%= button_to "Siguiendo",
+      user_follow_path(user),
+      method: :delete,
+      form: { class: "follow-form" },
+      class: "btn-custom following" %>
+
+<% elsif user.following?(current_user) %>
+  <%= button_to "Seguir también",
+      user_follow_path(user),
+      method: :post,
+      form: { class: "follow-form" },
+      class: "btn-custom follow-back" %>
+
+<% else %>
+  <%= button_to "Seguir",
+      user_follow_path(user),
+      method: :post,
+      form: { class: "follow-form" },
+      class: "btn-custom primary" %>
+<% end %>

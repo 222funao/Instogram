@@ -1,0 +1,26 @@
+<div id="comment_<%= comment.id %>" class="comment">
+
+  <div class="comment-avatar">
+     <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, class: "comment-avatar-img" %>
+        <% else %>
+          <%= image_tag "default_avatar.png", class: "comment-avatar-img" %>
+
+    <% end %>
+  </div>
+
+  <div class="comment-body">
+    <span class="comment-username"><%= comment.user.username %></span><span class="comment-content"><%= comment.content %></span>
+  </div>
+
+  <% if comment.user == current_user %>
+    <%= button_to post_comment_path(comment.post, comment),
+      method: :delete,
+      form: { data: { turbo_stream: true } },
+      class: "comment-delete" do %>
+      🗑️
+    <% end %>
+  <% end %>
+
+</div>
+

@@ -1,0 +1,16 @@
+<% liked = post.likes.exists?(user: current_user) %>
+
+<div class="like-wrapper">
+  <%= button_to post_like_path(post),
+    method: liked ? :delete : :post,
+    data: { turbo: true },
+    class: "like-btn" do %>
+    <%= liked ? "❤️" : "🤍" %>
+  <% end %>
+
+  <span class="like-count">
+    <%= post.likes.count %>
+  </span>
+</div>
+
+

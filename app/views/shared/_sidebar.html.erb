@@ -1,0 +1,54 @@
+<% return unless user_signed_in? %>
+<div class="messaging-layout">
+<aside id="sidebar" class="sidebar">
+
+  <div class="sidebar-section">
+    <div class="sidebar-section">
+  <h4>Buscar usuarios</h4>
+<div class="user-search-wrapper">
+  <%= form_with url: users_search_path,
+      method: :get,
+      data: { turbo_frame: "user_search_results" },
+      class: "user-search-form" do |f| %>
+
+    <%= f.text_field :query,
+        placeholder: "Buscar usuario",
+        class: "user-search-input" %>
+  <% end %>
+
+  <turbo-frame id="user_search_results">
+    <p class="sidebar-empty">Busca usuarios</p>
+  </turbo-frame>
+</div>
+</div>
+
+
+<h4>Mensajes</h4>
+
+<% if current_user.friends.empty? %>
+  <p class="sidebar-empty">
+    No tienes amigos a quienes enviar mensaje
+  </p>
+<% else %>
+  <% current_user.friends.each do |friend| %>
+    <%= button_to conversations_path(user_id: friend.id),
+        method: :post,
+        class: "message-user-btn" do %>
+
+      <div class="message-user">
+        <% if friend.avatar.attached? %>
+          <%= image_tag friend.avatar, class: "sidebar-avatar" %>
+        <% else %>
+          <%= image_tag "default_avatar.png", class: "sidebar-avatar" %>
+        <% end %>
+
+        <span><%= friend.username %></span>
+      </div>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+
+</aside>
+</div>

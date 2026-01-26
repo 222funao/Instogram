@@ -71,7 +71,7 @@ body {
 }
 
 .post-body {
-  padding: 10px;
+  padding: 1px;
 }
 
 /* FORM */
@@ -151,7 +151,8 @@ body {
   margin-bottom: 10px;
   background: #fafafa;
   border: 1px solid #dbdbdb;
-  border-radius: 3px;
+  border-radius: 6px;
+  box-sizing: border-box; 
 }
 
 .auth-btn {
@@ -174,30 +175,7 @@ body {
   font-size: 14px;
 }
 
-.comments {
-  padding: 0 16px 8px;
-  font-size: 14px;
-}
 
-.comment {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 6px;
-}
-
-.comment-text {
-    flex: 1;
-  line-height: 1.4;
-  color: #262626;
-  word-break: break-word;
-
-}
-
-.comment-user {
-  font-weight: 600;
-  margin-right: 4px;
-}
 
 /* Botón eliminar */
 .comment-delete {
@@ -254,6 +232,7 @@ body {
 }
 
 .post-user {
+  
   display: flex;
   align-items: center;
   gap: 6px;
@@ -323,11 +302,12 @@ body {
 
 .username-input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 0px 10px 0px;
   border: 1px solid #dbdbdb;
   border-radius: 6px;
   font-size: 14px;
   outline: none;
+  box-sizing: border-box;   
 }
 
 .username-input:focus {
@@ -479,6 +459,7 @@ body {
   font-weight: 600;
   color: #262626;
   text-decoration: none;
+  justify-self: start;
 }
 
 /* Right */
@@ -487,6 +468,7 @@ body {
   display: flex;
   align-items: center;
   gap: 18px;
+  justify-self: end;
 }
 
 /* Links */
@@ -1076,6 +1058,7 @@ body.dark .logout {
 /* ===== COMMENTS TOGGLE ===== */
 
 .toggle-comments-btn {
+  margin-left: 10px;
   background: none;
   border: none;
   color: #0095f6;
@@ -1123,37 +1106,7 @@ color: #78b8ff;
 
 /* ================= COMMENTS ================= */
 
-.comments {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
 
-/* Cada comentario */
-
-  .comment {
-  display: grid;
-  grid-template-columns: 100px 1fr auto;
-  gap: 6px;
-  font-size: 14px;
-  line-height: 1.4;
-  align-items: start;
-}
-
-/* Usuario */
-.comment-user {
- font-weight: 600;
-  color: #262626;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Texto */
-.comment-text {
-   color: #262626;
-  word-break: break-word;
-}
 
 /* Botón borrar */
 .comment-delete {
@@ -1607,6 +1560,985 @@ video:active {
   transform: scale(0.98); /* Pequeño efecto de pulsación al clickear */
   transition: transform 0.1s;
 }
+
+.like-wrapper {
+  margin-left: 10px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center; /* ⬅️ clave */
+  gap: 6px;
+}
+
+.like-btn {
+  display: flex;            /* ⬅️ clave */
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-size: 22px;
+  line-height: 1;           /* ⬅️ evita que “caiga” */
+  cursor: pointer;
+}
+
+.like-count {
+  display: flex;            /* ⬅️ iguala el baseline */
+  align-items: center;
+
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+
+/* modo oscuro (si lo tienes) */
+body.dark .like-count {
+  color: #ccc;
+}
+
+
+
+.comment-delete:hover {
+  opacity: 1;
+} 
+
+/* ===== Comentarios ===== */
+
+/* Contenedor principal */
+/* Contenedor principal */
+
+
+/* Avatar - Ajuste de tamaño */
+/* Contenedor principal */
+/* Contenedor principal */
+.comment {
+  display: flex;
+  align-items: flex-start; /* Necesario para que el texto largo fluya bien */
+  gap: 12px;
+  padding: 0px 0;         /* Casi nada de espacio interno arriba/abajo */
+  margin-bottom: 0px;
+}
+
+/* 1. Alineación del Avatar */
+.comment-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  /* Bajamos el avatar un poco para que su centro coincida con el texto */
+  margin-top: 4px; 
+}
+
+.comment-avatar-img,
+.comment-avatar-placeholder {
+  margin-left: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* 2. Alineación del Cuerpo de Texto */
+.comment-body {
+  flex-grow: 1;
+  display: block; /* Contenedor para los elementos inline */
+  line-height: 1.4; /* Altura de línea para que se vea cómodo */
+  padding-top: 2px; /* Pequeño ajuste para nivelar con el avatar */
+}
+
+.comment-username {
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+  display: inline;
+  margin-right: 6px;
+}
+
+.comment-content {
+  font-size: 14px;
+  color: #efefef;
+  display: inline;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* 3. Alineación del Botón Eliminar */
+.comment-delete {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  /* Bajamos el basurero para nivelarlo con la primera línea de texto */
+  margin-top: 6px; 
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.comment-delete:hover {
+  opacity: 1;
+}
+
+.post-user-caption {
+  margin-left: 5px;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  column-gap: 12px;
+  align-items: flex-start;
+  padding: 8px 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.avatar-container {
+  flex-shrink: 0;
+  padding-top: 2px; /* Alinea visualmente con la primera línea de texto */
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-caption-content {
+  /* Al usar inline-block aquí, permitimos que los hijos inline se junten */
+  display: inline-block; 
+  width: 100%;
+  line-height: 1.4;
+  font-size: 14px;
+  min-width: 0;
+}
+
+.username-text {
+  font-weight: 700;
+  color: rgb(0, 0, 0);
+  display: inline; /* Obliga a quedarse en la misma línea */
+  margin-right: 5px;
+  white-space: nowrap; /* Evita que el nombre de usuario se parta en dos */
+}
+
+.caption-text {
+  color: #efefef;
+  display: inline; /* Permite que empiece justo donde termina el nombre */
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal; /* Permite que el resto del texto sí salte de línea */
+}
+
+/* Contenedor del Caption */
+.post-user-caption {
+  display: grid;
+  grid-template-columns: 32px 1fr; 
+  column-gap: 12px;
+  align-items: start; /* Mantenemos start para que el texto largo no mueva el avatar */
+  padding: 10px 16px; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Imagen de Avatar */
+.post-user-caption .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  /* Eliminamos cualquier margen previo que ensucie la alineación */
+  margin: 0; 
+}
+
+/* Bloque de Texto (Ajuste de centro) */
+.post-caption-content {
+  min-width: 0;
+  line-height: 1.4;
+  font-size: 14px;
+  /* TRUCO MAESTRO: Este padding empuja la primera línea hacia abajo 
+     exactamente lo necesario para centrarla con el avatar de 32px */
+  padding-top: 6px; 
+}
+
+.username-text {
+  font-weight: 700;
+  color: white;
+  display: inline;
+  margin-right: 4px;
+}
+
+.caption-text {
+  color: #efefef;
+  display: inline;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.navbar-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+}
+
+.search-input {
+  width: 260px;
+  max-width: 100%;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #262626;
+  color: #fff;
+  font-size: 14px;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-input:focus {
+  outline: none;
+  background: #333;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 48px;
+  color: #aaa;
+  font-size: 15px;
+}
+
+.no-results {
+  font-weight: 500;
+}
+
+.layout {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+
+.feed {
+  flex: 1;
+}
+
+.sidebar-section {
+  margin-bottom: 24px;
+}
+
+.sidebar-section h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.sidebar-empty {
+  font-size: 13px;
+  color: #888888;
+}
+
+.sidebar {
+  width: 240px;
+  padding: 20px 12px;
+}
+
+.sidebar-section h4 {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.friend-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friend-username {
+  font-size: 13px;
+}
+
+.friend-status {
+  font-size: 11px;
+  color: #888;
+  margin-left: auto;
+}
+
+
+
+.user-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.follow-btn {
+  margin-left: auto;
+}
+
+.follow-btn button {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.following {
+  opacity: 0.7;
+}
+
+.follow-back {
+  font-weight: bold;
+}
+
+/* Contenedor del buscador */
+.user-search-wrapper {
+  position: relative;
+}
+
+/* Resultados desplegables */
+.user-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+
+  background: var(--bg, #fff);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  z-index: 1000; /* MUY IMPORTANTE */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Cada usuario */
+.user-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+}
+
+.user-result:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Texto cuando no hay resultados */
+.sidebar-empty {
+  padding: 8px 10px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* ===== LAYOUT GENERAL ===== */
+
+
+/* ===== SIDEBAR ===== */
+
+
+.sidebar-section {
+  margin-bottom: 24px;
+}
+
+.sidebar-section h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.sidebar-empty {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ===== USUARIO EN SIDEBAR ===== */
+.sidebar-user,
+.message-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar-user:hover,
+.message-user:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.sidebar-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar-username {
+  font-size: 14px;
+}
+
+.conversations-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.conversation-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.conversation-name {
+  font-size: 14px;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 140px);
+  border-left: 1px solid #e5e5e5;
+  padding-left: 16px;
+}
+
+/* CONTENEDOR DE MENSAJES */
+#messages {
+  display: flex;
+  height: calc(100vh - 60px);
+  margin-top: 60px; /* navbar */
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chat-form {
+  padding: 10px 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.chat-form input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+}
+
+.chat-form input[type="text"]:focus {
+  border-color: #3797f0;
+}
+
+.message {
+  max-width: 70%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 16px;
+  line-height: 1.4;
+  background: #000000;
+  align-self: flex-start;
+  word-wrap: break-word;
+}
+
+.message.me {
+  background: #000000;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+/* ===== BOTÓN ===== */
+.messages-btn {
+  background: #3797f0;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.messages-btn:hover {
+  opacity: 0.9;
+}
+
+/* ===== LAYOUT ===== */
+.messaging-layout {
+  display: flex;
+  height: calc(100vh - 120px);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 260px;
+  background: #0f0f0f;
+  border-right: 1px solid #222;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* OCULTO */
+.sidebar.hidden {
+  display: none;
+}
+
+/* ===== CHAT ===== */
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+/* MENSAJES */
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* BOTÓN FLOTANTE */
+.messages-btn.floating {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #3797f0;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 1001;
+}
+
+/* PANEL DE CONVERSACIONES */
+.conversations-panel {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 320px;
+  max-height: 70vh;
+  background: #0f0f0f;
+  border: 1px solid #222;
+  border-radius: 14px;
+  padding: 14px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+}
+
+/* OCULTO */
+.hidden {
+  display: none;
+}
+
+/* ITEMS */
+.conversation-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.conversation-item:hover {
+  background: #1a1a1a;
+}
+
+.conversation-avatar img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.conversation-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* BOTÓN FLOTANTE */
+.messages-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+  background: #1da1f2;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* SIDEBAR */
+.conversations-index {
+  position: fixed;
+  top: 0;
+  right: -320px; /* OCULTA */
+  width: 320px;
+  height: 100vh;
+  background: #0f0f0f;
+  border-left: 1px solid #2a2a2a;
+  z-index: 1000;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CUANDO ESTÁ ABIERTA */
+.conversations-index.active {
+  right: 0;
+}
+
+/* TÍTULO */
+.conversations-title {
+  padding: 16px;
+  border-bottom: 1px solid #2a2a2a;
+  font-size: 18px;
+  color: white;
+}
+
+/* LISTA */
+.conversations-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ITEM */
+.conversation-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid #1f1f1f;
+}
+
+.conversation-item:hover {
+  background: #1a1a1a;
+}
+
+.conversation-avatar img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+.conversation-username {
+  font-weight: bold;
+}
+
+/* EMPTY */
+.empty-conversations {
+  padding: 20px;
+  color: #aaa;
+  text-align: center;
+}
+
+/* ===== SIDEBAR CONTENEDOR ===== */
+
+
+.sidebar.active {
+  right: 0;
+}
+
+/* ===== SECCIONES ===== */
+.sidebar-section {
+  margin-bottom: 24px;
+}
+
+.sidebar h4 {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ===== BUSCADOR ===== */
+.user-search-form {
+  margin-bottom: 10px;
+}
+
+.user-search-input {
+  width: 100%;
+  padding: 8px 10px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.user-search-input::placeholder {
+  color: #777;
+}
+
+/* ===== TEXTO VACÍO ===== */
+.sidebar-empty {
+  color: #777;
+  font-size: 13px;
+  padding: 8px 0;
+}
+
+/* ===== AMIGOS ===== */
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.friend-item:hover {
+  background: #1a1a1a;
+}
+
+.friend-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friend-username {
+  color: #fff;
+  font-size: 14px;
+  flex: 1;
+}
+
+.friend-status {
+  font-size: 11px;
+  color: #888;
+}
+
+/* ===== MENSAJES ===== */
+.message-user-btn {
+  all: unset;
+  width: 100%;
+  cursor: pointer;
+}
+
+.message-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message-user:hover {
+  background: #1a1a1a;
+}
+
+.sidebar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message-user span {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+
+
+:root {
+  --navbar-height: 60px;
+}
+
+.navbar {
+ 
+  top: 0;
+  left: 0;
+
+  
+  height: var(--navbar-height);
+
+  z-index: 1000;
+}
+
+.sidebar {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+
+  width: 320px;
+  height: calc(100vh - var(--navbar-height));
+
+  background: #111;
+  z-index: 900;
+
+  
+  transition: transform 0.3s ease;
+}
+
+
+
+.sidebar {
+  overflow-y: auto;
+}
+
+.user-search-wrapper {
+  width: 100%;
+  
+  box-sizing: border-box;
+}
+
+.user-search-form {
+  width: 100%;
+}
+
+.user-search-input {
+  width: 100%;
+  max-width: 100%;
+
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #333;
+
+  background: #1a1a1a;
+  color: white;
+
+  box-sizing: border-box;
+}
+
+.sidebar {
+  overflow-x: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 320px;
+  height: calc(100vh - 60px);
+  background: #111;
+
+
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+
+body.dark-mode .sidebar {
+  background: #0f0f0f;
+  color: #f1f1f1;
+  border-right: 1px solid #222;
+}
+
+body.dark-mode .user-search-input {
+  background: #1c1c1c;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+body.dark-mode .message-user:hover {
+  background: #1a1a1a;
+}
+
+.chat-layout {
+  display: flex;
+  height: calc(100vh - 60px);
+  margin-top: 60px; /* navbar */
+}
+
+/* Esto obliga a que el botón ignore los estilos de sistema */
+input.btn-custom, 
+button.btn-custom,
+.friend-status {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: none !important;
+  
+  display: inline-block !important;
+  font-family: sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 6px 14px !important;
+  border-radius: 6px !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: white !important;
+  text-align: center !important;
+  line-height: 1 !important;
+}
+
+/* Colores específicos */
+.btn-custom.primary {
+  background-color: #0095f6 !important;
+}
+
+.btn-custom.following {
+  background-color: #333 !important; /* Gris muy oscuro */
+}
+
+.btn-custom.follow-back {
+  background-color: #0095f6 !important;
+}
+
+.friend-status {
+  background-color: #1a2e1a !important;
+  color: #4ade80 !important;
+  border: 1px solid #2d5a2d !important;
+}
+
+/* Hover */
+.btn-custom:hover {
+  opacity: 0.8 !important;
+}
+
+
+
 
 
 

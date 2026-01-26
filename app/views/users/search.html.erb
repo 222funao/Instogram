@@ -1,0 +1,23 @@
+<turbo-frame id="user_search_results">
+  <% if params[:query].blank? %>
+    <!-- nada -->
+  <% elsif @users.empty? %>
+    <p class="sidebar-empty">Usuario inexistente</p>
+  <% else %>
+    <% @users.each do |user| %>
+      <div class="user-result">
+        <%= image_tag(
+          user.avatar.attached? ? user.avatar : "default_avatar.png",
+          class: "friend-avatar"
+        ) %>
+
+        <span class="friend-username"><%= user.username %></span>
+
+        <div id="<%= dom_id(user, :follow) %>">
+          <%= render "users/follow_button", user: user %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</turbo-frame>
+

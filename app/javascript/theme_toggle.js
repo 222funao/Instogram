@@ -1,34 +1,19 @@
-function initThemeToggle() {
-  const btn = document.querySelector("#theme-toggle");
-  if (!btn) return;
-
-  // Estado inicial
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
+(function() {
+  const forceDarkMode = () => {
     document.body.classList.add("dark");
-    btn.textContent = "☀️";
-  } else {
-    btn.textContent = "🌙";
-  }
+    
+    // Si tienes un botón de tema y quieres que muestre el sol
+    const btn = document.querySelector("#theme-toggle");
+    if (btn) btn.textContent = "☀️";
+  };
 
-  btn.addEventListener("click", () => {
-    const isDark = document.body.classList.toggle("dark");
+  // 1. Ejecutar de inmediato
+  forceDarkMode();
 
-    // Cambiar icono
-    btn.textContent = isDark ? "☀️" : "🌙";
+  // 2. Ejecutar cada vez que Turbo cambie de página
+  document.addEventListener("turbo:load", forceDarkMode);
 
-    // Guardar preferencia
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
-}
-
-document.addEventListener("turbo:load", initThemeToggle);
-
-document.addEventListener("turbo:load", () => {
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-  }
-});
-
+  // 3. Opcional: Limpiar el localStorage para que no haya conflictos
+  localStorage.setItem("theme", "dark");
+})();
 

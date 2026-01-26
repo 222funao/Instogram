@@ -1,0 +1,9 @@
+<%= form_with model: [post, Comment.new],
+      id: "comment_form_#{post.id}" do |f| %>
+
+  <%= f.text_field :content,
+        placeholder: "Añade un comentario...",
+        class: "comment-input" %>
+
+  <%= f.submit "Publicar", class: "comment-submit" %>
+<% end %>

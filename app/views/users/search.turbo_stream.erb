@@ -1,0 +1,20 @@
+<%= turbo_stream.replace "user_search_results" do %>
+  <% if @users.empty? %>
+    <p class="sidebar-empty">Usuario inexistente</p>
+  <% else %>
+    <% @users.each do |user| %>
+      <div class="user-result">
+        <%= image_tag(
+          user.avatar.attached? ? user.avatar : "default_avatar.png",
+          class: "friend-avatar"
+        ) %>
+
+        <span class="friend-username"><%= user.username %></span>
+
+        <div class="follow-btn">
+          <%= render "users/follow_button", user: user %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
