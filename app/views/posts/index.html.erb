@@ -16,13 +16,11 @@
     <div class="post-card">
       <div class="post-header">
         <div class="post-user">
-    <% if current_user.avatar.attached? %>
-          <%= image_tag current_user.avatar, class: "avatar" %>
+   <% if post.user.avatar.attached? %>
+          <%= image_tag post.user.avatar, class: "avatar" %>
         <% else %>
-          <%= image_tag "default_avatar.png", class:"avatar" %>
-
-        
-  <% end %>
+          <%= image_tag "default_avatar.png", class: "avatar" %>
+        <% end %>
 
   <strong>@<%= post.user.username %></strong>
 </div>
